@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<title>实验室主页测试</title>
+	</head>
+	<body>
+		<h1>实验室主页测试</h1>
+		<div id="msg">正在连接后端...</div>
+		<script>
+			// 注意：这里我们使用后端容器在 Docker 中的服务名
+			fetch('/api/hello')
+				.then((res) => res.json())
+				.then((data) => {
+					document.getElementById('msg').innerText = data.message;
+				});
+		</script>
+	</body>
+</html>
