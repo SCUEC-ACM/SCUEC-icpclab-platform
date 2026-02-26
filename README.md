@@ -1,42 +1,68 @@
-# Test to ACM
+# SCUEC-lab-platform
+当前目标：建一个能跑的网页
 
-This template should help get you started developing with Vue 3 in Vite.
+# ICPC 实验室开发部建设方案 (2026版)
 
-## Recommended IDE Setup
+## 一、 愿景与背景
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+在 AI 大模型大幅降低技术门槛的今天，未来的竞争力属于**有创意**且具备**综合能力**的开发者。
 
-## Recommended Browser Setup
+- **培养目标**：我们不培养只懂单一技术栈的工具人，而是培养横向具备广度、纵向具备专精能力的 **“T”型人才**。
+- **核心使命**：利用技术手段为实验室减负，将琐碎的行政事务（如 QQ 收集表、通知等）转化为高效的 Web 自动化流程。
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+------
 
-## Type Support for `.vue` Imports in TS
+## 二、 组织架构
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+本部门设立 **1 位部长**与 **2 位副部长**，负责整体技术路线规划与项目进度管理。
 
-## Customize configuration
+- **部长 (1名)**：统筹部门规划、技术选型及外部资源对接。
+- **副部长 (2名)**：分别负责 **技术架构/Code Review** 与 **项目管理/文档协作**。
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+------
 
-## Project Setup
+## 三、 核心项目：实验室全功能主页
 
-```sh
-npm install
-```
+我们将建设一个集管理与学习于一体的实验室主页，包含以下功能模块：
 
-### Compile and Hot-Reload for Development
+### 1. 核心管理模块
 
-```sh
-npm run dev
-```
+- **自动化收集表**：彻底替代 QQ 收集表，支持数据自动汇总与 Excel 一键导出。
+- **权限管理系统**：实现用户端与管理端的权限隔离，确保数据安全。
+- **任务单系统**：用于发布和跟踪开发任务，确保项目闭环。
 
-### Type-Check, Compile and Minify for Production
+### 2. 学习与竞赛模块
 
-```sh
-npm run build
-```
+- **OJ 系统集成**：集成实验室已有的 OJ 平台，提供统一入口。
+- **智能数据爬虫**：实时爬取洛谷、Codeforces (CF)、AtCoder 等平台的个人数据并同步至用户界面。
+- **技能树板块**：可视化展示成员的学习路径与成长进度。
+
+### 3. 工具与社区模块
+
+- **实验室论坛**：支持内容发布与技术交流。
+- **代码查重工具**：内置作业或比赛代码的相似度检测功能。
+- **训练总结 AI**：利用 AI 自动生成成员的训练分析与周报总结。
+- **资源中心**：托管各类代码模板（板子）、实用软件与学习资料。
+
+------
+
+## 四、 技术栈建议 
+
+为了实现上述功能，我们建议成员掌握以下技术：
+
+| **领域** | **核心技术**                   | **说明**                                              |
+| -------- | ------------------------------ | ----------------------------------------------------- |
+| **前端** | HTML5, CSS3, JS, **Vue 3**     | 构建高性能、响应式的现代网页。                        |
+| **后端** | **Node.js** 或 **Go (Golang)** | Node.js 适合全栈快速开发，Go 适合高性能后端服务。     |
+| **数据** | **PostgreSQL**                 | 相比传统 MySQL，Postgres 在处理复杂数据模型上更稳健。 |
+| **爬虫** | **Python**                     | 爬取竞赛数据的首选语言。                              |
+| **运维** | **Linux** & **Docker**         | 服务器操作基础与容器化部署，彻底解决环境兼容问题。    |
+| **协作** | **Git**                        | 必须掌握的版本控制与团队协作工具。                    |
+
+------
+
+## 五、 服务器与权限管理
+
+- **托管环境**：初期部署在 Reisentyan 的云服务器及私人域名上，后期根据功能成熟度迁移至实验室专用域名。
+- **成员赋权**：每位成员都将获得服务器的部分操作权限，鼓励大家在服务器上实践自己的创意项目。
+
