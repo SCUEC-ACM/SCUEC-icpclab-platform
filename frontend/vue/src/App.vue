@@ -8,7 +8,7 @@ import BodyPage from './components/BodyPage.vue';
 		<div class="container"><HeadPage /></div>
 		<BodyPage />
 	</div>
-	<a href="./temp/开发须知.pdf">点击下载开发须知</a>
+	<a href="./src/temp/开发须知.md" download>点击下载开发须知</a>
 </template>
 
 <style scoped>
@@ -17,6 +17,6 @@ import BodyPage from './components/BodyPage.vue';
 	flex-direction: column;
 }
 .container {
-		padding: 20px;
+	padding: 20px;
 }
 </style>
