@@ -3,9 +3,9 @@ version: '3.8'
 services:
   # 前端服务 (Vue 3)
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+  build:
+    context: ./frontend/vue
+    dockerfile: Dockerfile
     container_name: SCUEC-lab-platform-frontend
     restart: always
     ports:
