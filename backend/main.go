@@ -1,38 +1,63 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-// Response 结构体用于返回 JSON
-type Response struct {
-	Message string `json:"message"`
+var DB *gorm.DB
+
+// 1. 定义与数据库对应的结构体
+type Student struct {
+	ID        uint   `gorm:"primaryKey"`
+	Name      string `json:"name"`
+	StudentID string `json:"student_id"`
+	Contact   string `json:"contact"`
 }
 
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-	// 设置响应头为 JSON 格式
-	w.Header().Set("Content-Type", "application/json")
-	
-	// 准备返回数据
-	res := Response{
-		Message: "来自 Go 后端的连接成功！",
+func initDB() {
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Shanghai",
+		os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
+	var err error
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatal("数据库连接失败: ", err)
 	}
-
-	// 编码并发送
-	json.NewEncoder(w).Encode(res)
-	fmt.Println("接收到一次前端请求")
+	// 自动迁移表结构（如果 init.sql 没生效，这句也能帮你建表）
+	DB.AutoMigrate(&Student{})
 }
 
 func main() {
-	// 路由映射
-	// 注意：这里的路径要和前端 fetch 的路径一致
-	http.HandleFunc("/api/hello", helloHandler)
+	initDB()
+	r := gin.Default()
 
-	fmt.Println("后端服务启动在 :3000 端口...")
-	// 启动服务器
-	if err := http.ListenAndServe(":3000", nil); err != nil {
-		fmt.Printf("启动失败: %s\n", err)
-	}
+	// 2. 配置 CORS（解决跨域问题）
+	r.Use(cors.Default())
+
+	// 3. 编写接收数据的 POST 接口
+	r.POST("/api/submit", func(c *gin.Context) {
+		var student Student
+		// 将前端传来的 JSON 数据绑定到 student 结构体上
+		if err := c.ShouldBindJSON(&student); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "数据格式不正确"})
+			return
+		}
+
+		// 存入数据库
+		if err := DB.Create(&student).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "保存失败，可能是学号重复"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "提交成功！", "data": student})
+	})
+
+	r.Run(":3000")
 }
